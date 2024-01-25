@@ -73,6 +73,8 @@ section{
   font-size: 3.6rem;
   color:var(--text-color);
   display: none;
+  position: absolute;
+  right: 100px;
 }
 
 .home{
