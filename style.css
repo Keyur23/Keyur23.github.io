@@ -474,6 +474,9 @@ form button :hover{
   .skills-container{
     grid-template-columns: 2fr;
   }
+  .about-img img{
+    width: 90vw;
+  }
 }
 
 @media(max-width:450px){
