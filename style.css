@@ -265,8 +265,14 @@ span{
 }
 
 .mywork-box img{
-  width: 100%;
-  transition: .5s ease;
+ /* width: 100%;
+  transition: .5s ease;*/
+  flex: 1; 
+  height: 215px;
+  border-radius: 10px; 
+  display: flex;
+  justify-content: center; 
+  align-items: center;
 }
 
 .mywork-box:hover img{
