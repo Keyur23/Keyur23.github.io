@@ -267,11 +267,13 @@ span{
 .mywork-box img{
  /* width: 100%;
   transition: .5s ease;*/
-  flex: 1; 
-  height: 215px;
-  border-radius: 10px; 
+   width: 100%;
+  transition: .5s ease;
+   /* Make all boxes equal in width */
+  height: 230px; /* Set a fixed height for uniformity */
+  border-radius: 10px; /* Optional for rounded corners */
   display: flex;
-  justify-content: center; 
+  justify-content: center; /* Center content horizontally */
   align-items: center;
 }
 
