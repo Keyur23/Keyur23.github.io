@@ -45,7 +45,38 @@ ScrollReveal().reveal('.home-img, .skills-container, .mywork-box, .contact form'
 ScrollReveal().reveal('.home-content h1, .about-img',{origin:'left'});
 ScrollReveal().reveal('.home-content p, .about-content',{origin:'right'});
 
-const form = documnet.querySelector("form");
+// Project Tabs Functionality
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Remove active class from all buttons and contents
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    // Add active class to clicked button
+    button.classList.add('active');
+    
+    // Show corresponding tab content
+    const tabId = button.getAttribute('data-tab');
+    const targetContent = document.getElementById(tabId);
+    targetContent.classList.add('active');
+    
+    // Force reflow to ensure images render properly
+    void targetContent.offsetHeight;
+    
+    // Force image loading
+    const images = targetContent.querySelectorAll('img');
+    images.forEach(img => {
+      if (!img.complete) {
+        img.src = img.src;
+      }
+    });
+  });
+});
+
+const form = document.querySelector("form");
 
 
 function sendEmail() {
