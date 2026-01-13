@@ -34,46 +34,42 @@ window.onscroll = () => {
 };
 
 ScrollReveal({
-  reset:true,
+  reset:false,
   distance:'80px',
-  duration:2000,
-  delay:200
+  duration:1200,
+  delay:150
 });
 
 ScrollReveal().reveal('.home-content, .heading',{origin:'top'});
-ScrollReveal().reveal('.home-img, .skills-container, .mywork-box, .contact form',{origin:'bottom'});
+ScrollReveal().reveal('.home-img, .skills-container, .contact form',{origin:'bottom'});
 ScrollReveal().reveal('.home-content h1, .about-img',{origin:'left'});
 ScrollReveal().reveal('.home-content p, .about-content',{origin:'right'});
 
-// Project Tabs Functionality
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabContents = document.querySelectorAll('.tab-content');
+// Project Tabs Functionality (robust)
+function showTab(tabId){
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabContents = document.querySelectorAll('.tab-content');
 
-tabButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    // Remove active class from all buttons and contents
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    tabContents.forEach(content => content.classList.remove('active'));
-    
-    // Add active class to clicked button
-    button.classList.add('active');
-    
-    // Show corresponding tab content
-    const tabId = button.getAttribute('data-tab');
-    const targetContent = document.getElementById(tabId);
-    targetContent.classList.add('active');
-    
-    // Force reflow to ensure images render properly
-    void targetContent.offsetHeight;
-    
-    // Force image loading
-    const images = targetContent.querySelectorAll('img');
-    images.forEach(img => {
-      if (!img.complete) {
-        img.src = img.src;
-      }
-    });
+  tabButtons.forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.tab === tabId);
   });
+
+  tabContents.forEach(content=>{
+    if(content.id === tabId){
+      content.classList.add('active');
+      content.style.display = 'block';
+      void content.offsetWidth;
+      content.querySelectorAll('img').forEach(img=>{const s=img.src; img.src=''; img.src=s;});
+    } else {
+      content.classList.remove('active');
+      content.style.display = 'none';
+    }
+  });
+}
+
+// init default tab
+document.addEventListener('DOMContentLoaded', ()=>{
+  showTab('data-science');
 });
 
 const form = document.querySelector("form");
