@@ -74,28 +74,62 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 const form = document.querySelector("form");
 
+function sendEmail(event) {
+  // Prevent default form submission
+  if (event) {
+    event.preventDefault();
+  }
 
-function sendEmail() {
+  // Get form values
   var fullName = document.getElementById("name").value;
   var email = document.getElementById("email").value;
   var phone = document.getElementById("phone").value;
   var subject = document.getElementById("subject").value;
   var msg = document.getElementById("message").value;
 
+  // Validate form fields
+  if (!fullName || !email || !phone || !subject || !msg) {
+    alert("Please fill in all fields before sending.");
+    return false;
+  }
+
+  // Validate email format
+  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    alert("Please enter a valid email address.");
+    return false;
+  }
+
   var bodyMessage = "Full Name: "+ fullName +
    "<br/> Email: "+ email + 
    "<br/> Mobile Number: "+ phone+
     "<br/> Message: "+ msg;
 
+  // Send email using SMTP.js
   Email.send({
     SecureToken: "06c92d3b-6562-4abe-b071-1fe43474dbb3",
     To : 'dataanalyst6606@gmail.com',
     From : "dataanalyst6606@gmail.com",
     Subject : subject,
     Body : bodyMessage
-}).then(
-  message => alert(message)
-);
+  }).then(
+    function(message) {
+      if (message === "OK") {
+        alert("Message sent successfully!");
+        // Reset form after successful send
+        form.reset();
+      } else {
+        alert("Error sending message: " + message);
+      }
+    }
+  ).catch(
+    function(error) {
+      alert("Failed to send message. Please try again later.");
+      console.error("Email send error:", error);
+    }
+  );
+
+  return false;
 }
 
 
