@@ -1067,19 +1067,19 @@
       <section class="contact" id="contact">
          <h2 class="heading">Contact <span>Me</span></h2>
 
-         <form onsubmit="sendEmail(); reset(); return false;">
+         <form onsubmit="return sendEmail(event);">
             <div class="input-box">
-                <input type="text" placeholder="Full Name" id="name" class="item" autocomplete="off">
-                <input type="email" placeholder="Email" id="email" class="item" autocomplete="off">
+                <input type="text" placeholder="Full Name" id="name" class="item" autocomplete="off" required>
+                <input type="email" placeholder="Email" id="email" class="item" autocomplete="off" required>
             </div>
             
             <div class="input-box">
-               <input type="number" placeholder="Mobile Number" id="phone" class="item" autocomplete="off" >
+               <input type="number" placeholder="Mobile Number" id="phone" class="item" autocomplete="off" required>
                
-               <input type="text" placeholder="Email Subject" id="subject" class="item" autocomplete="off">
+               <input type="text" placeholder="Email Subject" id="subject" class="item" autocomplete="off" required>
                
            </div>
-           <textarea name="" id="message" cols="30" rows="10" placeholder="Your Message" class="item" autocomplete="off"></textarea>
+           <textarea name="" id="message" cols="30" rows="10" placeholder="Your Message" class="item" autocomplete="off" required></textarea>
            <button type="submit">Send Message</button>
          </form>
       </section>
