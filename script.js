@@ -124,7 +124,7 @@ function sendEmail(event) {
       if (message === "OK") {
         alert("Message sent successfully!");
         // Reset form after successful send
-        if (form) form.reset();
+        form.reset();
       } else {
         alert("Error sending message: " + message);
       }
