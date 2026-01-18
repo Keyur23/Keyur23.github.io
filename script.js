@@ -14,11 +14,11 @@ window.onscroll = () => {
     let top = window.scrollY;
     let offset = sec.offsetTop - 150;
     let height = sec.offsetHeight;
-    let id = sec.getAttribute('id');
+    let id = sec. getAttribute('id');
 
     if(top >= offset && top < offset + height){
       navLinks.forEach(links => {
-        links.classList.remove('active');
+        links. classList.remove('active');
         document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
       });
     };
@@ -35,7 +35,7 @@ window.onscroll = () => {
 
 if (typeof ScrollReveal !== 'undefined') {
   ScrollReveal({
-    reset:false,
+    reset: false,
     distance:'80px',
     duration:1200,
     delay:150
@@ -53,7 +53,7 @@ function showTab(tabId){
   const tabContents = document.querySelectorAll('.tab-content');
 
   tabButtons.forEach(btn=>{
-    btn.classList.toggle('active', btn.dataset.tab === tabId);
+    btn.classList. toggle('active', btn.dataset. tab === tabId);
   });
 
   tabContents.forEach(content=>{
@@ -61,9 +61,9 @@ function showTab(tabId){
       content.classList.add('active');
       content.style.display = 'block';
       void content.offsetWidth;
-      content.querySelectorAll('img').forEach(img=>{const s=img.src; img.src=''; img.src=s;});
+      content. querySelectorAll('img').forEach(img=>{const s=img.src; img.src=''; img.src=s;});
     } else {
-      content.classList.remove('active');
+      content. classList.remove('active');
       content.style.display = 'none';
     }
   });
@@ -76,6 +76,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 const form = document.querySelector("form");
 
+// Initialize EmailJS
+(function(){
+  emailjs.init("PowZCRWTE6N-17mhH");
+})();
+
 function sendEmail(event) {
   // Prevent default form submission
   if (event) {
@@ -84,13 +89,13 @@ function sendEmail(event) {
 
   // Get form values
   var fullName = document.getElementById("name").value.trim();
-  var email = document.getElementById("email").value.trim();
-  var phone = document.getElementById("phone").value.trim();
+  var email = document. getElementById("email").value.trim();
+  var phone = document. getElementById("phone").value.trim();
   var subject = document.getElementById("subject").value.trim();
   var msg = document.getElementById("message").value.trim();
 
   // Validate form fields
-  if (!fullName || !email || !phone || !subject || !msg) {
+  if (!fullName || !email || ! phone || !subject || !msg) {
     alert("Please fill in all fields before sending.");
     return false;
   }
@@ -102,42 +107,42 @@ function sendEmail(event) {
     return false;
   }
 
-  var bodyMessage = "Full Name: "+ fullName +
-   "<br/> Email: "+ email + 
-   "<br/> Mobile Number: "+ phone+
-    "<br/> Message: "+ msg;
-
-  if (typeof Email === "undefined" || typeof Email.send !== "function") {
+  // Check if EmailJS is loaded
+  if (typeof emailjs === "undefined") {
     alert("Email service is unavailable. Please try again later.");
+    console.error("EmailJS library not loaded");
     return false;
   }
 
-  // Send email using SMTP.js
-  Email.send({
-    SecureToken: "06c92d3b-6562-4abe-b071-1fe43474dbb3",
-    To : 'dataanalyst6606@gmail.com',
-    From : "dataanalyst6606@gmail.com",
-    Subject : subject,
-    Body : bodyMessage
-  }).then(
-    function(message) {
-      if (message === "OK") {
-        alert("Message sent successfully!");
-        // Reset form after successful send
-        form.reset();
-      } else {
-        alert("Error sending message: " + message);
-      }
-    }
-  ).catch(
-    function(error) {
-      alert("Failed to send message. Please try again later.");
-      console.error("Email send error:", error);
-    }
-  );
+  // Prepare template parameters
+  var templateParams = {
+    from_name: fullName,
+    from_email: email,
+    phone: phone,
+    subject: subject,
+    message: msg
+  };
+
+  // Get submit button and show loading state
+  var submitButton = event.target.querySelector('button[type="submit"]');
+  var originalButtonText = submitButton. textContent;
+  submitButton. textContent = 'Sending... ';
+  submitButton.disabled = true;
+
+  // Send email using EmailJS
+  emailjs.send('service_cuomgv4', 'template_ykws3rb', templateParams)
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response. text);
+      alert("Message sent successfully!  I'll get back to you soon.");
+      form.reset();
+      submitButton.textContent = originalButtonText;
+      submitButton.disabled = false;
+    }, function(error) {
+      console.error('FAILED...', error);
+      alert("Failed to send message.  Please try again or contact me directly at dataanalyst6606@gmail. com");
+      submitButton.textContent = originalButtonText;
+      submitButton.disabled = false;
+    });
 
   return false;
 }
-
-
-
