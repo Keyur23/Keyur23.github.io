@@ -81,11 +81,11 @@ function sendEmail(event) {
   }
 
   // Get form values
-  var fullName = document.getElementById("name").value;
-  var email = document.getElementById("email").value;
-  var phone = document.getElementById("phone").value;
-  var subject = document.getElementById("subject").value;
-  var msg = document.getElementById("message").value;
+  var fullName = document.getElementById("name").value.trim();
+  var email = document.getElementById("email").value.trim();
+  var phone = document.getElementById("phone").value.trim();
+  var subject = document.getElementById("subject").value.trim();
+  var msg = document.getElementById("message").value.trim();
 
   // Validate form fields
   if (!fullName || !email || !phone || !subject || !msg) {
