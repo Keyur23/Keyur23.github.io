@@ -33,17 +33,19 @@ window.onscroll = () => {
 
 };
 
-ScrollReveal({
-  reset:false,
-  distance:'80px',
-  duration:1200,
-  delay:150
-});
+if (typeof ScrollReveal !== 'undefined') {
+  ScrollReveal({
+    reset:false,
+    distance:'80px',
+    duration:1200,
+    delay:150
+  });
 
-ScrollReveal().reveal('.home-content, .heading',{origin:'top'});
-ScrollReveal().reveal('.home-img, .skills-container, .contact form',{origin:'bottom'});
-ScrollReveal().reveal('.home-content h1, .about-img',{origin:'left'});
-ScrollReveal().reveal('.home-content p, .about-content',{origin:'right'});
+  ScrollReveal().reveal('.home-content, .heading',{origin:'top'});
+  ScrollReveal().reveal('.home-img, .skills-container, .contact form',{origin:'bottom'});
+  ScrollReveal().reveal('.home-content h1, .about-img',{origin:'left'});
+  ScrollReveal().reveal('.home-content p, .about-content',{origin:'right'});
+}
 
 // Project Tabs Functionality (robust)
 function showTab(tabId){
@@ -105,6 +107,11 @@ function sendEmail(event) {
    "<br/> Mobile Number: "+ phone+
     "<br/> Message: "+ msg;
 
+  if (typeof Email === "undefined" || typeof Email.send !== "function") {
+    alert("Email service is unavailable. Please try again later.");
+    return false;
+  }
+
   // Send email using SMTP.js
   Email.send({
     SecureToken: "06c92d3b-6562-4abe-b071-1fe43474dbb3",
@@ -117,7 +124,7 @@ function sendEmail(event) {
       if (message === "OK") {
         alert("Message sent successfully!");
         // Reset form after successful send
-        form.reset();
+        if (form) form.reset();
       } else {
         alert("Error sending message: " + message);
       }
